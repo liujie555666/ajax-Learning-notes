@@ -1,0 +1,23 @@
+@charset "UTF-8";
+     #zt{
+			position: absolute;
+			left: 50%;
+			width: 400px;
+			height:500px;
+			margin-left: -200px;
+			background-color: lightGreen;
+			text-align: center;
+			min-height: 50px;
+			overflow-y: scroll;
+			overflow-x: hidden;
+		}
+
+		#zt input{
+			height: 20px;margin-top: 10px;
+		}
+		#list{
+			background-color: lightBlue;
+		}
+		#list li{
+			text-align: left;
+		}

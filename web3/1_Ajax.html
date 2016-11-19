@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="1_Ajax.css">
+	<script type="text/javascript" src="1_Ajax.js"></script>
+	<script type="text/javascript">
+		window.onload=function(){
+			var btn =document.getElementById("btn");
+			btn.onclick=function(){
+			var code=document.getElementById('code').value;
+				ajax({
+				url:'./10zt.php?code='+code,
+				success:function(data){
+					if (data.status==0) {
+					var list=data.data.info.context;
+							var tag='';
+							for (var i = 0; i < list.length; i++) {
+							var item= list[i];
+							var desc=item.desc;
+							var t=new Date();
+							t.setTime(item.time+'000');
+							var str=t.getFullYear()+'年'+t.getMonth()+'月'+t.getDay()+'日'+(t.getHours()>12?'下午':'上午')+t.getHours()%12+':'+t.getMinutes()+':'+t.getSeconds();
+							tag+='<li><div>'+str+'</div><div>'+desc+'</div></li>';
+							}
+							var ul=document.createElement("ul");
+							ul.innerHTML=tag;
+							document.getElementById('list').appendChild(ul);
+						}else{
+							var info=data.msg;
+							document.getElementById('list').innerHTML=info;
+						}
+				}
+			});
+			}}
+			// xhr.open('get','./10zt.php?code='+code,true);
+			
+	</script>
+</head>
+<body>
+	<div id="zt">
+		<div>
+			<input type="text" id="code"/>
+			<input type="button" id="btn" value="查询" />
+		</div>
+		<div id="list">
+			
+		</div>
+	</div>
+</body>
+</html>

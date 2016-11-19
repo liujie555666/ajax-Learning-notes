@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #sug {
+        width: 300px;
+        background-color: lightGreen;
+        margin: 50px auto;
+    }
+    
+    #sug input {
+        margin: 10px;
+    }
+    
+    #list ul {
+        padding: 0;
+        margin-top: -10px;
+        list-style: none;
+    }
+    
+    #list ul li {
+        line-height: 30px;
+        background-color: lightGray;
+        cursor: pointer;
+        height: 30px;
+        padding-left: 20px;
+    }
+    
+    #list ul li:hover{
+        background-color: lightGreen;
+    }
+    </style>
+
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+    <div id="sug">
+        <div>
+            <input type="text" id="keyWord" autocomplete=off />
+            <input type="button" value="查询一下" id="btn">
+        </div>
+        <div id="list">
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('#keyWord').keyup(function(e) {
+        var kd = $('#keyWord').val();
+        var url = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=' + kd;
+        getData(url);
+    });
+
+    function getData(url) {
+        $.ajax({
+            type: 'get',
+            async: true,
+            url: url,
+            dataType: 'jsonp',
+            jsonp: 'cb',
+            jsonpCallback: "Callback",
+            success: function(data){
+                var tag='<ul>';
+                for (var i = 0; i < data.s.length; i++) {
+                	var item=data.s[i];
+                	tag+='<li>'+data.s[i]+'</li>';
+                }
+                tag+='</ul>';
+                $('#list').html(tag);
+            }
+        });
+    }
+});
+</script>
+
+</html>

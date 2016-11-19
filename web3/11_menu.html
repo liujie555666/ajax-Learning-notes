@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    ul {
+        list-style-type: none;
+    }
+    
+    #info {
+        width: 300px;
+        height: 800px;
+        overflow-y:scroll; 
+    }
+    </style>
+    <script type="text/javascript" src='jquery-1.11.1.min.js'></script>
+    <script type="text/javascript" src="template.js"></script>
+    <script type="text/html" id="text">
+    <div>
+{{each data as value i}}        
+       <h1>{{title}}</h1>
+       <div class="tags">{{tags}}</div>
+       <div class="imtro">{{imtro}}</div>
+       <div class="ingredients">{{ingredients}}</div>
+       <div class="burden">{{burden}}</div>
+       <img src={{albums}}/>
+{{/each}}
+</div>
+    </script>
+    <script type="text/javascript">
+    $(function() {
+
+        $('#btn').click(function() {
+            var txt = $('#txt').val();
+            var url = "http://apis.juhe.cn/cook/query?key=02c9dd8051c7175afc25a1c5db8ca1a2&rn=3&pn=0&dtype=jsonp&menu=" + txt;
+            $.ajax({
+                 type: 'get',
+                async: true,
+                url: url,
+                dataType: 'jsonp',
+                success: function(data) {
+                    var data = data.result.data;
+                },
+                error: function(e) {
+                    console.log(e);
+                }
+            })
+            // $.ajax({
+            //     type: 'get',
+            //     async: true,
+            //     url: url,
+            //     dataType: 'jsonp',
+            //     success: function(data) {
+            //         $('#info').empty();
+            //         var data = data.result.data;
+            //         console.log(data);
+            //         var tag = '';
+            //         for (var i = 0; i < data.length; i++) {
+                        
+            //             var steps = data[i].steps;
+            //             tag += '<h1>' + data[i].title + '</h1><div class="tags">' + data[i].tags + '</div><div class="imtro">' + data[i].imtro + '</div><div class="ingredients">' + data[i].ingredients + '</div><div class="burden">' + data[i].burden + '</div><div><img src="' + data[i].albums + '" > </div><ul>';
+            //             for (var j = 0; j < steps.length; j++) {
+            //                 var imgph = steps[j].img;
+            //                 var step = steps[j].step;
+            //                 tag += '<li><p>' + step + '</p><img src="' + imgph + '" > </li>'
+            //             }
+            //             tag += '</ul>';
+                        
+            //         }
+            //         $('#info').append($(tag));
+            //     },
+            //     error: function(e) {
+            //         console.log(e);
+            //     }
+            // });
+        });
+
+    });
+    </script>
+</head>
+
+<body>
+    <input type="text" id='txt' />
+    <input type="button" id="btn" value="搜索" />
+    <div id="info"></div>
+</body>
+
+</html>

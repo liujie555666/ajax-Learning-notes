@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+	/*
+
+	*/
+	function getDataWithParams(url,timeout,callback){
+		var xhr =null;
+		if (window.XMLHttpRequest) {
+			xhr=new XMLHttpRequest();
+		}else{
+			xhr=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		var time =true;
+		var timer=null;
+		if (time) {
+			var timer = setTimeout(function(){
+				xhr.abort();//终止;
+				console.log("heiheiheihei中断了");
+			},timeout);
+		}
+		xhr.open('get',url,true);
+		xhr.send(null);
+		xhr.onreadystatechange=function(){
+			if (xhr.readyState==4) {
+				if (xhr.status==200) {
+					clearTimeout(timer);
+					callback(xhr.responseText);
+				}
+			}
+		}
+	}
+	var url="./quch.php?username='张飞'&password='123456789'";
+	getDataWithParams(url,13000,function(data){
+		console.log('hahahahahahahaha'+data);
+	});
+</script>
+</body>
+</html>

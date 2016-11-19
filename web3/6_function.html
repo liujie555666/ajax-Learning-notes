@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // fn();
+    // function fn(){
+
+    // }
+    // fn();
+    // // fn1();
+    // var fn1=function(){
+    // 	console.log(2222);
+    // }
+    // fn1();
+    // //函数的变量提升
+    // var a=1;
+    // function abc(){
+    // 	console.log("a="+a);
+    // 	var a=2;
+    // }
+    // abc();
+    /*
+JavaScript 代码运行分几个阶段
+1.预解析--把所有的函数定义提前(在变自己的作用范围内提前)
+变量的赋值不提前
+2.执行---从上到下执行[(setTimeout.setInterval.ajax中的回调函数.事件中的触发函数)除外]
+		*/
+    // var cb=function(){
+    // 	console.log('gjhlkjljblhbiluhlkbjj');
+    // }
+    function fn2(callBack) {
+        if (typeof callBack == 'function') {
+            callBack();
+        } else {
+            console.error('请传入一个方法');
+        }
+    }
+    // fn2(cb);
+    // //console.log('hello');
+
+    var obj = {
+        name: '小日本',
+        say: function() {
+            console.log('公认的');
+        }
+    };
+    fn2(obj.say);
+
+    /*结论
+    函数的参数可以是一个函数,这个函数可以直接调用
+    */
+    // function fn4() {
+    //     var n = 1;
+    //     return function() {
+    //         n++;
+    //         console.log(n);
+    //     }
+    // }
+    // var fn5=fn4();
+    // fn5();
+    // fn5();
+    // fn5();
+    // fn5();
+    //2345
+//结论:函数可以作为返回值  函数的嵌套形成闭包
+
+// var data=[];
+// for (var i = 0; i <3; i++) {
+// 	data[i]=function(){
+// 		console.log(i);
+// 	}
+// }
+// data[0]();
+// data[1]();
+// data[2]();
+
+var data1=[];
+for (var i = 0; i <3; i++) {
+	data[i]=function(key){
+		return function(){
+			console.log(key);
+		}(i);
+	}
+}
+data1[0]();
+data1[1]();
+data1[2]();
+
+
+
+
+
+    </script>
+</body>
+
+</html>

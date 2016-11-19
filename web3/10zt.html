@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#zt{
+			position: absolute;
+			left: 50%;
+			width: 400px;
+			height:500px;
+			margin-left: -200px;
+			background-color: lightGreen;
+			text-align: center;
+			min-height: 50px;
+			overflow-y: scroll;
+			overflow-x: hidden;
+		}
+		#zt input{
+			height: 20px;margin-top: 10px;
+		}
+		#list{
+			background-color: lightBlue;
+		}
+		#list li{
+			text-align: left;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var btn =document.getElementById("btn");
+			btn.onclick=function(){
+
+				showBookInfo();
+			}
+			function showBookInfo(){
+				var code=document.getElementById("code").value;
+				var xhr =null;
+				if (window.XMLHttpRequest) {
+					xhr=new XMLHttpRequest();
+				}else{
+					xhr=new ActiveXObject("Microsoft.XMLHTTP")
+				}
+				xhr.open('get','./10zt.php?code='+code,true);
+				xhr.send(null);
+				xhr.onreadystatechange=function(){
+					if(xhr.readyState==4&&xhr.status==200){
+						var data=JSON.parse(xhr.responseText);
+						if (data.status==0) {
+							var list=data.data.info.context;
+							var tag='';
+							for (var i = 0; i < list.length; i++) {
+							var item= list[i];
+							var desc=item.desc;
+							var t=new Date();
+							t.setTime(item.time+'000');
+							var str=t.getFullYear()+'年'+t.getMonth()+'月'+t.getDay()+'日'+(t.getHours()>12?'下午':'上午')+t.getHours()%12+':'+t.getMinutes()+':'+t.getSeconds();
+							tag+='<li><div>'+str+'</div><div>'+desc+'</div></li>';
+							}
+							var ul=document.createElement("ul");
+							ul.innerHTML=tag;
+							document.getElementById('list').appendChild(ul);
+						}else{
+							var info=data.msg;
+							document.getElementById('list').innerHTML=info;
+						}
+					}
+		}
+	}
+}
+	</script>
+</head>
+<body>
+	<div id="zt">
+		<div>
+			<input type="text" id="code"/>
+			<input type="button" id="btn" value="查询" />
+		</div>
+		<div id="list">
+			
+		</div>
+	</div>
+</body>
+</html>

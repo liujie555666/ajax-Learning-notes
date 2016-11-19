@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>form</title>
+    <script type="text/javascript">
+    	window.onload=function(){
+    		var str=window.location.search;
+    		if (str) {
+    			var flag=str.split("=");
+    			if (flag[1]==1) {
+document.getElementById("showinfo").innerHTML="登录成功";
+    			}
+    		}
+    	}
+    </script>
+</head>
+
+<body>
+    <h4>同步请求</h4>
+    <div id="showinfo"></div>
+    <form method="post" action="./01formpost.php">
+        用户名:
+        <input type="text" name="username" /> 密码:
+        <input type="password" name="password" />
+        <input type="submit" name="提交">
+    </form>
+</body>
+
+</html>

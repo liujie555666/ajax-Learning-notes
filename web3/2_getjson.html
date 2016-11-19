@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('#btn').on('click',function(){
+			$.ajax({
+				url:'./jsondata.php',
+				dataType:'json',
+				type:'get',
+				success:function(data){
+					console.log(data);
+				},
+				error:function(e){
+					console.log(e);
+
+				}
+			});
+		})
+	})
+	</script>
+</head>
+<body>
+	<input type="button" value="获取数据" id="btn">
+</body>
+</html>

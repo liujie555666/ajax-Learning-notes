@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>原生ajax-状态值含义</title>
+    <script type="text/javascript">
+    window.onload = function() {
+        // 第一步创建xhr对象
+        var xhr = null;
+        if (window.XMLHttpRequest) {
+            //标准浏览器
+            xhr = new XMLHttpRequest();
+        } else {
+            //早期的浏览器
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        console.log('状态q' + xhr.readyState);
+        //第二步准备发送请求--陪值发送请求的一些行为
+        //第一个参数是请求的方法第二个参数是请求的路径第三个参数是一个true或false true异步 false 同步 false慎用 除非数据量小
+        xhr.open("get", "02form.php", true);
+        console.log('状态w' + xhr.readyState);
+        //第三步执行发送的动作
+        xhr.send(null);
+        console.log('状态e' + xhr.readyState);
+        //第四步:指定一些回调函数
+        /*0:XMLHttpRequest对象创建完成
+        1:表示发送请求的动作准备好了,但没有发送
+        2:表示已经发送完成
+        3:服务器已经返回了数据
+        4:服务器返回的数据已经可以使用
+        */
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                //http请求状态
+                if (xhr.status == 200) {
+                    var data = xhr.responseText;
+                    //响应内容
+                    console.log(data);
+                }
+            }
+            console.log('状态r' + xhr.readyState);
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <form>
+        用户名:
+        <input type="text" name="username" /> 密码:
+        <input type="password" name="password" />
+        <input type="submit" value="提交">
+    </form>
+</body>
+
+</html>

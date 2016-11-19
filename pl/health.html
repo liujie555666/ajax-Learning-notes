@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    
+    ul {
+        list-style: none;
+        width: 800px;
+    }
+    .xxbtn img{
+    	width: 100px;
+    	height: 50px;
+    }
+    .desc {
+        font-size: 14px;
+    }
+    
+    .kw {
+        display: inline-block;
+        float: left;
+        font-size: 14px;
+    }
+    
+    #info {
+        font-size: 22px;
+        width: 800px;
+        font-weight: 700;
+        padding-left: 350px;
+    }
+    
+    .xxbtn {
+        font-size: 24px;
+    }
+    .btxx{
+    	font-size: 14px;
+    	float: right;
+    }
+    </style>
+    <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+
+        var url1 = 'http://op.juhe.cn/yi18/news/newsclass?&key=b3c8042dd3be357db7dd3d0da43330bf'
+        $.ajax({
+            type: 'get',
+            async: true,
+            url: url1,
+            dataType: 'jsonp',
+            success: function(data) {
+                var tngou = data.result.list.tngou;
+                // console.log(tngou);
+                for (var i = 0; i < tngou.length; i++) {
+                    var tag = '<option value="';
+                    tag += tngou[i].id + '">' + tngou[i].name + '</option>';
+                    $('#info').append($(tag));
+                }
+            },
+            error: function(e) {
+                console.log(e);
+            }
+        });
+        var page = 1;
+
+        $('#info').change(function() {
+            $("#ul").empty();
+            var url2 = 'http://op.juhe.cn/yi18/news/list?limit=' + page + '&page=12&id=' + this.value + '&key=b3c8042dd3be357db7dd3d0da43330bf';
+            $.ajax({
+                type: 'get',
+                async: true,
+                url: url2,
+                dataType: 'jsonp',
+                success: function(data) {
+                    // console.log(data);
+                    var list = data.result.list;
+                    for (var i = 0; i < list.length; i++) {
+                        var tag = '<li id=>';
+                        tag += '<h1><a  href="javascript:;" class="xxbtn" title="' + list[i].id + '">' + list[i].title + '</a></h1>';
+                        tag += '<div class="kw">' + list[i].keywords + '</div>';
+                        tag += '<div class="desc">' + list[i].description + '</div>';
+                        tag += '<a  href="javascript:;" class="xxbtn" title="' + list[i].id + '"><img src="' + list[i].img + '"/></a>';
+                        tag += '<a  href="javascript:;" class="xxbtn btxx" title="' + list[i].id + '">详细信息</a></li>';
+                        $('#ul').append($(tag));
+                    }
+                    $('.xxbtn').click(function() {
+                        $("#ul").empty();
+                        var url3 = 'http://op.juhe.cn/yi18/news/show?id=' + this.title + '&key=b3c8042dd3be357db7dd3d0da43330bf';
+                        $.ajax({
+                            type: 'get',
+                            async: true,
+                            url: url3,
+                            dataType: 'jsonp',
+                            success: function(data) {
+                                console.log(data);
+                                var list = data.result;
+                                var tag = '<div>';
+                                tag += '<a  href="javascript:;"><img src="' + list.img + '"/></a>';
+                                tag += '<div class="mess">' + list.message + '</div>';
+                                tag+='<a class="fanhui" href="javascript:;">返回上一页</a>'
+                                $('#ul').append($(tag));
+                                 $('.fanhui').click(function() {
+                                 	$('#info').change();
+                                 });
+
+                            },
+                            error: function(e) {
+                                console.log(e);
+                            }
+                        });
+
+                    });
+                },
+                error: function(e) {
+                    console.log(e);
+                }
+
+            });
+        });
+        $('#info').change();
+    });
+    </script>
+</head>
+
+<body>
+    <select id="info">
+    </select>
+    <ul id="ul"></ul>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #sug{
+            width: 300px;
+            background-color: lawngreen;
+            margin: 50px auto;
+        }
+        #sug input {
+            margin: 10px 10px;
+        }
+        #list ul{
+            margin-top: -10px;
+            list-style: none;
+            padding-left: 0;
+        }
+        #list ul li{
+            background-color: lightgray;
+            line-height: 30px;
+            height: 30px;
+            cursor: pointer;
+            padding-left: 20px;
+
+        }
+        #list ul li.current{
+            background-color: lawngreen;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.11.1.min.js">
+    </script>
+</head>
+<body>
+<div id="sug">
+    <div>
+        <input type="text" id="keyword" autocomplete="off">
+        <input type="button" value="查询一下" id="btn">
+    </div>
+    <div id="list">
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#btn").click(function (e) {
+            var kd = $("#keyword").val();
+            var url = "http://apis.juhe.cn/cook/query?key=2c7a52717fb4a05e154297ce7ec0ca15&rn=3&pn=0&dtype=jsonp&menu=" + kd;
+            $.ajax({
+                type: "get",
+                async: true,
+                url: url,
+                dataType: "jsonp",
+                success: function (data) {
+                    console.log(data);
+                    alert(data);
+                }, error: function (e) {
+                    console.log(e);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

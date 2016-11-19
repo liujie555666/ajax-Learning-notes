@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    	<style type="text/css">
+    ul {
+        list-style-type: none;
+    }
+    
+    #info {
+        width: 300px;
+        height: 800px;
+        overflow-y:scroll; 
+    }
+    </style>
+    </style>
+    <script type="text/javascript" src="template.js"></script>
+    <script type="text/html" id="text">
+    <div>
+{{each data as value i}}        
+       <h1>{{value.title}}</h1>
+       <div class="tags">{{value.tags}}</div>
+       <div class="imtro">{{value.imtro}}</div>
+       <div class="ingredients">{{value.ingredients}}</div>
+       <div class="burden">{{value.burden}}</div>
+       <img src="{{value.albums[0]}}"></img>
+{{/each}}
+</div>
+    </script>
+    <script type="text/javascript">
+    function menu(data){
+    document.getElementById('info').innerHTML='';
+        var data=data.result;
+        //         var tag='';
+        //         for (var i = 0; i < data.length; i++) {
+        //             var steps=data[i].steps;
+                    
+        //         tag+='<h1>'+data[i].title+'</h1><div class="tags">'+data[i].tags+'</div><div class="imtro">'+data[i].imtro+'</div><div class="ingredients">'+data[i].ingredients+'</div><div class="burden">'+data[i].burden+'</div><div><img src="'+data[i].albums+'" > </div><ul>';
+        //         for (var j = 0; j < steps.length; j++) {
+        //             var imgph=steps[j].img;
+        //             var step=steps[j].step;
+        //             tag+='<li><p>'+step+'</p><img src="'+imgph+'" > </li>'
+        //         }
+        //         tag+='</ul>';
+            
+        // }
+        // var div=document.createElement('div');
+        //     div.innerHTML=tag;
+        //     document.getElementById('info').appendChild(div);
+        var html=template('text',data);
+        console.log(data);
+        document.getElementById('info').innerHTML=html;
+    }
+
+    window.onload=function() {
+        document.getElementById('btn').onclick=function() {
+        	var txt = document.getElementById('txt').value;
+        var url = "http://apis.juhe.cn/cook/query?key=2c7a52717fb4a05e154297ce7ec0ca15&rn=3&pn=0&callback=menu&dtype=jsonp&menu=" + txt;
+            var script = document.createElement('script');
+            script.src = url;
+            document.body.appendChild(script);
+        };
+    };
+    </script>
+</head>
+
+<body>
+    <input type="text" id='txt' />
+    <input type="button" id="btn" value="搜索" />
+    <div id="info"></div>
+</body>
+
+</html>

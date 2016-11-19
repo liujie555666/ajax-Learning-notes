@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    用户名:
+    <input type="text" name="username" id="username" /> 密码:
+    <input type="text" name="password" id="password" />
+    <input type="button" value="提交" id="btn">
+    <div id="showInfo"></div>
+    <script type="text/javascript">
+    document.getElementById("btn").onclick = function() {
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        var xhr = null;
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        } else {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        var url = "http://192.168.41.118/coshttp/server.php?username=" + username + "&password=" + password;
+        xhr.open("get", url, true);
+        xhr.send(null);
+        xhr.onreadystatechange = function(event) {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseText;
+                    document.getElementById("showInfo").innerHTML = data;
+                } else {
+                    console.log("出现错误");
+                }
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>

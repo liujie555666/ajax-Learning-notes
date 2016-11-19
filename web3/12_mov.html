@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>影片信息检索</title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    
+    div {
+        width: 500px;
+        min-height: 500px;
+        background-color: #678;
+        margin: 30px auto;
+        text-align: center;
+        padding-top: 10px;
+    }
+    
+    div ul {
+        list-style-type: none;
+    }
+    
+    div input:nth-child(1) {
+        /*text-align: center;*/
+        height: 30px;
+        padding-left: 80px;
+    }
+    
+    div input:nth-child(2) {
+        /*text-align: center;*/
+        width: 80px;
+        height: 30px;
+    }
+    </style>
+    <script type="text/javascript" src='http://libs.baidu.com/jquery/1.10.2/jquery.min.js
+'></script>
+    <script type="text/javascript">
+    $(function() {
+    	function getMovie(){
+    		var txt=$('#txt').val();
+    		var offset=parseInt($("input:last").val());
+        	var url='http://v.juhe.cn/movie/index?key=1c8e436ff4033ac1ea00bf808688315c&title='+ encodeURI(txt) +'&smode=0&pagesize=5&offset='+offset;
+        	$.ajax({
+        		type:'get',
+        		url:url,
+        		dataType:"jsonp",
+        		success:function(data){
+        			var result=data.result;
+        			var tag='';
+        			for (var key in result) {
+        				tag+='<h3>影片名:'+result[key].title+'</h3>';
+        				tag+='<h4>简介'+result[key].writers+'</h4>';
+        				tag+='<h4>作者'+result[key].actors+'</h4>';
+        				tag+='<img src="'+result[key].poster+'"/>';
+        			}
+        			$("ul").append($(tag));
+        			offset+=5;
+        			$("input:last").val(offset);
+        		},
+        		error:function(e){
+        			console.error(e);
+        		}
+        	});
+    	}
+        $("input:eq(1)").on("click", function() {
+        	getMovie();
+        });
+        $("input:eq(2)").on("click", function() {
+        	getMovie();
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div id="movieInfo">
+        <input type="text" id="txt" />
+        <input type="button" value="search">
+        <ul id="ul">
+        </ul>
+        <input type="button" value="加载更多" id="more">
+        <input type="hidden" value="0" id="offset">
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="button" value="点击" id="btn"/>
+	<table id="bookInfo"></table>
+	<script type="text/javascript">
+		window.onload=function(){
+			var btn =document.getElementById("btn");
+			btn.onclick=function(){
+				showBookInfo();
+			}
+			function showBookInfo(){
+				var xhr =null;
+				if (window.XMLHttpRequest) {
+					xhr=new XMLHttpRequest();
+				}else{
+					xhr=new ActiveXObject("Microsoft.XMLHTTP")
+				}
+				xhr.open('get','./data.json',true);
+				xhr.send(null);
+				xhr.onreadystatechange=function(){
+					if(xhr.readyState==4&&xhr.status==200){
+						var jsonStr=xhr.responseText;
+						var data=JSON.parse(jsonStr);
+						var total=data.total;
+						var list=data.data;
+						var tag='';
+						for (var i = 0; i < list.length; i++) {
+							var book=list[i];
+							tag+='<tr><td>'+book.name+'</td><td>'+book.desc+'</td><td>'+book.category+'</td></tr>';
+						}
+						var tbody=document.createElement("tbody");
+						tbody.innerHTML=tag;
+						document.getElementById('bookInfo').appendChild(tbody);
+				}
+			}
+		function getNodeText(node){
+			if (window.ActiveXObject) {
+				return node.text;
+			}else{
+				return node.textContent;
+			}
+		}
+		}
+		
+	}
+	</script>
+</body>
+</html>

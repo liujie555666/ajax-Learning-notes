@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    用户名:
+    <input type="text" name="username" id="username" /> 密码:
+    <input type="text" name="password" id="password" />
+    <input type="button" value="提交" id="btn">
+    <div id="showInfo"></div>
+    <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+        $('#btn').click(function(){
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var params = "username=" + username + "&password=" + password;
+        $.ajax({
+                type: "post",
+                url:"http://192.168.41.118/coshttp/server.php",
+                dataType: "text",
+                data: params,
+                success: function(data) {
+                    $("#showInfo").html(data);
+                },
+                error: function(e) {
+
+                }
+            });
+    });
+    </script>
+</body>
+
+</html>

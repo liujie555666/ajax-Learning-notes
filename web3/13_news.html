@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新闻头条</title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    
+    div {
+        width: 500px;
+        min-height: 500px;
+        background-color: #234;
+        margin: 30px auto;
+        text-align: center;
+        padding-top: 10px;
+    }
+    
+    div ul {
+        list-style-type: none;
+    }
+    </style>
+    <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        $("#news").change(function() {
+        	console.log(this.value);
+            var url = 'http://v.juhe.cn/toutiao/index?type=top&key=f79b503950a59a4b114084d7850f4b7b';
+            $.ajax({
+                type: 'get',
+                url: url,
+                dataType: "jsonp",
+                // jsonpCallback: "Callback",
+                success: function(data) {
+          
+                    console.log("1111"+data);
+                },
+                error: function(e) {
+                    console.log(e);
+                }
+            });
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div id="movieInfo">
+        <select id="news">
+            <option value="top">新闻头条</option>
+            <option value="shehui">社会新闻</option>
+            <option value="guonei">国内新闻</option>
+            <option value="guoji">国际新闻</option>
+            <option value="yule">娱乐新闻</option>
+            <option value="tiyu">体育新闻</option>
+            <option value="junshi">军事新闻</option>
+            <option value="keji">科技新闻</option>
+            <option value="caijing">财经新闻</option>
+            <option value="shishang">时尚新闻</option>
+        </select>
+        <ul id="ul">
+        </ul>
+        <input type="hidden" value="0" id="offset">
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Json解析</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var str='{"name":"三国演义","category":"文学"}';
+		//怎么把字符串转化为json对象
+
+		var data=JSON.parse(str);
+		
+		//怎么把json对象转化为字符串
+		var jsonStr=JSON.stringify(data);
+		// alert(typeof jsonStr)
+		// console.log(data.name);
+		var eva=eval("("+str+")");
+		//也能把字符串转化为json对象
+
+
+		console.log(typeof eva);
+
+	</script>
+</body>
+</html>

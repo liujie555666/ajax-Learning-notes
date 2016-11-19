@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="button" value="点击" id="btn"/>
+	<script type="text/javascript" src="./jquery-1.11.1.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+$("#btn").on("click",function(){
+$.ajax({
+	type:"get",
+	url:"./03open.php?username=中国&password=123456",
+	success:function(data){
+		console.log(data);
+	}
+});
+});
+		});
+	</script>
+</body>
+</html>
